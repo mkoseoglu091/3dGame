@@ -1,8 +1,11 @@
 pico-8 cartridge // http://www.pico-8.com
 version 34
 __lua__
---find your way out of the maze 
+--escape the volcano 
+--jump over lava 
 
+
+-- core functions
 function _init()
  poke(0x5f10+8, 128+8)
  poke(0x5f10+6, 128+6)
@@ -16,20 +19,23 @@ function _update()
   update_title()
  elseif mode == 1 then
   update_game()
+ elseif mode == 2 then
+  update_game_over()
  end
 end
-
 
 function _draw()
  if mode == 0 then
   draw_title()
  elseif mode == 1 then
   draw_game()
+ elseif mode == 2 then
+  draw_game_over()
  end
 end
 
 
-
+-- states
 
 
 -- title state
@@ -93,9 +99,7 @@ function update_game()
    pl.dz=-0.15
   end
  end
-
 end
-
 
 function draw_game()
  cls()
@@ -114,6 +118,17 @@ function draw_game()
  end
 end
 
+
+-- game over state
+
+function update_game_over()
+ -- press button to try again
+end
+
+function draw_game_over()
+ -- game over screen
+ -- retry etc.
+end
 -->8
 -- title screen compress
 
@@ -287,7 +302,7 @@ function draw_3d()
   -- camera based on player pos
   x=pl.x
   y=pl.y
-  z=pl.z-2 -- 1 unit high
+  z=pl.z-1.5 -- 1 unit high
 
   ix=flr(x)
   iy=flr(y)

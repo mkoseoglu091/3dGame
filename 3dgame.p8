@@ -80,9 +80,9 @@ function update_game()
      pl.y=pl.y+sin(pl.d)*m
    end
  end
- if (btn(5)) then
-  restart()
- end
+ --if (btn(5)) then
+  --restart()
+ --end
 
  -- z means player feet
  if (pl.z >= mz(pl.x,pl.y) and pl.dz >=0) then
@@ -137,12 +137,17 @@ end
 -- game over state
 
 function update_game_over()
- -- press button to try again
+ pl.wait += 1
+ if pl.wait >= 10 then
+  if btn(4) then
+   init_game()
+  end
+ end
 end
 
 function draw_game_over()
  -- game over screen
- -- retry etc.
+ -- press 🅾️ to try again
 end
 -->8
 -- title screen compress
@@ -289,6 +294,7 @@ function restart()
  last = time()
  pl.isdone = false
  pl.time = 0
+ pl.wait = 0
 end
 
 function mc(x,y)

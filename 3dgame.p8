@@ -468,7 +468,7 @@ function draw_3d()
      bottom_wall = flr(sy)
      
      
-     if last_dir*1+5 == 6 then -- what condition to use???
+     if last_dir*1 == 1 then -- what condition to use???
       tline(sx,top_wall,sx,bottom_wall, (pl.x+vx*dist_x)%1*2, 38, 0, 2/(bottom_wall-top_wall))
      else
       tline(sx,top_wall,sx,bottom_wall, (pl.y+vy*dist_y)%1*2, 34, 0, 2/(bottom_wall-top_wall))

@@ -7,6 +7,8 @@ __lua__
 
 -- core functions
 function _init()
+ autorun = false
+ menuitem(1, "autorun", function() autorun = not autorun end)
  poke(0x5f10+8, 128+8)
  poke(0x5f10+6, 128+6)
  poke(0x5f10+0, 128+0)
@@ -74,7 +76,20 @@ function update_game()
  if (btn(0)) then pl.d=(pl.d+0.02)%1 end
  if (btn(1)) then pl.d=(pl.d+0.98)%1 end
 
- if (btn(2) or btn(3)) then
+ if autorun then
+  if btn(3) then
+   m=0
+  else
+   m = 0.2
+  end
+  dx = cos(pl.d)*m
+   dy = sin(pl.d)*m
+   if (mz(pl.x+dx*3, pl.y+dy*3) >
+    pl.z - 0.4) then
+     pl.x=pl.x+cos(pl.d)*m
+     pl.y=pl.y+sin(pl.d)*m
+   end
+ elseif (btn(2) or btn(3)) then
   if (btn(2)) then m=0.2 else m=-0.2 end
    dx = cos(pl.d)*m
    dy = sin(pl.d)*m
@@ -148,7 +163,7 @@ end
 
 function update_game_over()
  pl.wait += 1
- if pl.wait >= 10 then
+ if pl.wait >= 4 then
   if btn(4) then
    init_game()
   end
@@ -164,7 +179,7 @@ end
 
 function update_victory()
  pl.wait += 1
- if pl.wait >= 10 then
+ if pl.wait >= 4 then
   if btn(4) then
    init_game()
   end
